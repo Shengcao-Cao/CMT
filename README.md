@@ -31,9 +31,31 @@ conda activate at
 python train_net.py \
     --num-gpus 4 \
     --config configs/faster_rcnn_VGG_cross_city.yaml \
-    OUTPUT_DIR save/city_cmt \
+    OUTPUT_DIR save/city_atcmt \
     SEMISUPNET.CONTRASTIVE True \
     SEMISUPNET.CONTRASTIVE_LOSS_WEIGHT 0.05
+```
+
+Similarly, for PT + CMT on Cityscapes -> Foggy Cityscapes (all splits), run the following steps:
+
+```bash
+# enter the code directory for PT + CMT
+cd CMT_PT
+
+# activate AT environment
+conda activate pt
+
+# add the last two lines to enable CMT
+python train_net.py \
+    --num-gpus 4 \
+    --config configs/pt/final_c2f.yaml \
+    MODEL.ANCHOR_GENERATOR.NAME "DifferentiableAnchorGenerator" \
+    UNSUPNET.EFL True \
+    UNSUPNET.EFL_LAMBDA [0.5,0.5] \
+    UNSUPNET.TAU [0.5,0.5] \
+    OUTPUT_DIR save/city_ptcmt \
+    UNSUPNET.CONTRASTIVE True \
+    UNSUPNET.CONTRASTIVE_LOSS_WEIGHT 0.05
 ```
 
 - Other configuration options may be found in `configs`.
@@ -47,9 +69,9 @@ Here we list the model weights for the results included in our paper:
 | Dataset                                     | Method   | mAP (AP50) | Weights                                                      |
 | ------------------------------------------- | -------- | ---------- | ------------------------------------------------------------ |
 | Cityscapes -> Foggy Cityscapes (0.02 split) | PT + CMT | 43.8       | [link](https://drive.google.com/file/d/1bpaeL6yZOuM-e7iRAfCOnH-uRf-4aSx8/view?usp=sharing) |
-| Cityscapes -> Foggy Cityscapes (0.02 split) | AT + CMT | 50.3       | [link](https://drive.google.com/file/d/1VTTqdUJtrbTRgX5_NBfwnESZvxAyDmK2/view?usp=sharing) |
+| Cityscapes -> Foggy Cityscapes (0.02 split) | AT + CMT | 50.3       | [link](https://drive.google.com/file/d/1kifW5Q4uRs31sTPgivJgbvRLI2AG7io3/view?usp=sharing) |
 | Cityscapes -> Foggy Cityscapes (all splits) | PT + CMT | 49.3       | [link](https://drive.google.com/file/d/1nHpG6kNyVAKyS78Y0eY2Q1AfH8-aG_xB/view?usp=sharing) |
-| Cityscapes -> Foggy Cityscapes (all splits) | AT + CMT | 51.9       | [link](https://drive.google.com/file/d/1bBedw6gDgYFXZ66kUvwa574W9Wy2W3D1/view?usp=sharing) |
+| Cityscapes -> Foggy Cityscapes (all splits) | AT + CMT | 51.9       | [link](https://drive.google.com/file/d/1wPq_DzYE6hoyuijNN06ZT4_lHBd5-ufs/view?usp=sharing) |
 | KITTI -> Cityscapes                         | PT + CMT | 64.3       | [link](https://drive.google.com/file/d/1h32WLT70yc1zp1a3rjQl38LxmidlQKXg/view?usp=sharing) |
 | Pascal VOC -> Clipart1k                     | AT + CMT | 47.0       | [link](https://drive.google.com/file/d/1zwJEVU720fhpK2kEpxINtd8CPU1SCIPI/view?usp=sharing) |
 
